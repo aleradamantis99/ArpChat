@@ -80,9 +80,8 @@ int getInterfaceIndex(const std::string& ifacename, int sockfd)
 
 Eth craftFrame (const std::string& dest, const std::string& source)
 {   
-    Eth m;
-    memset (&m, 0, 14);
-    //memeset(&m, 0, sizeof(m));
+    Eth m{};
+
     auto macDest = transformMac(dest);
     auto macSrc = transformMac(source);
     std::copy (macDest.begin(), macDest.end(), m.destMac.begin());
