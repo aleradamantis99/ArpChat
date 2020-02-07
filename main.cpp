@@ -25,11 +25,8 @@ int main ()
     std::string iface("wlan0");
     network::socket s(TESTPROTO_RAW);
     std::string destMac("74:d4:35:ea:53:1d"), srcMac("3c:a0:67:69:42:c9"), msg("Hola tio");
+    network::packet<Eth, Data<13>> p{network::craftFrame(destMac, srcMac)};
     
-    auto ethHeader = network::craftFrame(destMac, srcMac);
-    network::packet<Eth, Data<13>> p;
-    memcpy (&p.header, &ethHeader, 14);
-    //memcpy (p.header.sourceMac.data(), transformMac(srcMac).data(), 6);
     auto& data = get<Data<13>>(p).payload;
     std::copy (msg.begin(), msg.end(), data.begin());
     
